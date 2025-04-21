@@ -1,4 +1,4 @@
-<?php include('../parts/header.php'); ?>
+<?php include('views/parts/header.php'); ?>
 
     <div class="container">
         <br>
@@ -15,31 +15,26 @@
                     <table class="table">
                         <thead>
                             <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                                <th><input type="checkbox" onclick="toggleAll(this)"></th>
+                                <th>Nome</th>
+                                <th>CNPJ</th>
+                                <th>Cidade</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">3</th>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>@social</td>
-                            </tr>
+                            <?php foreach ($suppliers as $f): ?>
+                                <tr>
+                                    <td><input type="checkbox" name="ids[]" value="<?= $f['id'] ?>"></td>
+                                    <td><?= htmlspecialchars($f['name']) ?></td>
+                                    <td><?= htmlspecialchars($f['cnpj']) ?></td>
+                                    <td><?= htmlspecialchars($f['city']) ?></td>
+                                    <td>
+                                        <a class="btn btn-warning btn-sm" href="index.php?action=supplier_edit&id=<?= $f['id'] ?>">Editar</a>
+                                        <a class="btn btn-danger btn-sm" href="index.php?action=supplier_delete&id=<?= $f['id'] ?>">Excluir</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                     <button class="btn btn-danger btn-sm" type="submit">Excluir selecionados</button>
@@ -53,4 +48,4 @@
             document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = source.checked);
         }
     </script>
-<?php include('../parts/footer.php'); ?>
+<?php include('views/parts/footer.php'); ?>
