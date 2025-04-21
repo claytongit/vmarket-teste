@@ -2,6 +2,12 @@
 
     <div class="container">
         <br>
+        <?php if(isset($_GET['error']) && $_GET['error'] == 'supplier_cnpj_exists'): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                CNPJ do fornecedor já existe!
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif ?>
         <div class="card">
             <div class="card-header w-100 d-flex justify-content-between align-items-center">
                 Fornecedor
@@ -37,15 +43,9 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <button class="btn btn-danger btn-sm" type="submit">Excluir selecionados</button>
+                    <button class="btn btn-danger btn-sm d-none" id="btn-delete-multiple" type="submit">Excluir selecionados</button>
                 </form>
             </div>
         </div>
     </div>
-    
-    <script>
-        function toggleAll(source) {
-            document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = source.checked);
-        }
-    </script>
 <?php include('views/parts/footer.php'); ?>
