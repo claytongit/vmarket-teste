@@ -1,4 +1,4 @@
-<?php include('../parts/header.php'); ?>
+<?php include('views/parts/header.php'); ?>
 
     <div class="container">
         <br>
@@ -6,7 +6,7 @@
             <div class="card-header w-100 d-flex justify-content-between align-items-center">
                 Produto
                 <div>
-                    <a href="#" class="btn btn-success btn-sm">Novo Produto</a>
+                    <a href="index.php?action=product_create" class="btn btn-success btn-sm">Novo Produto</a>
                 </div>
             </div>
             <div class="card-body">
@@ -16,19 +16,19 @@
                         <div class="row">
                             <div class="col">                                
                                 <div class="form-floating mb-3">
-                                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                                    <label for="floatingInput">Email address</label>
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Nome do produto">
+                                    <label for="name">Nome do produto</label>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
-                                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <select class="form-select" name="supplier_id" aria-label="Fornecedor">
+                                        <option selected disabled>-- Fornecedor --</option>
+                                        <?php foreach ($suppliers as $f): ?>
+                                            <option value="<?= $f['id'] ?>"><?= htmlspecialchars($f['name']) ?></option>
+                                        <?php endforeach; ?>
                                     </select>
-                                    <label for="floatingSelect">Works with selects</label>
+                                    <label for="floatingSelect">Fornecedores</label>
                                 </div>
                             </div>
                         </div>
@@ -42,31 +42,26 @@
                     <table class="table">
                         <thead>
                             <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
+                                <th><input type="checkbox" onclick="toggleAll(this)"></th>
+                                <th>Nome</th>
+                                <th>Preço</th>
+                                <th>Fornecedores</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">3</th>
-                            <td>John</td>
-                            <td>Doe</td>
-                            <td>@social</td>
-                            </tr>
+                            <?php foreach ($products as $p): ?>
+                                <tr>
+                                    <td><input type="checkbox" name="ids[]" value="<?= $p['id'] ?>"></td>
+                                    <td><?= htmlspecialchars($p['name']) ?></td>
+                                    <td><?= htmlspecialchars('R$ ' . number_format($p['price'], 2, ',', '.')) ?></td>
+                                    <td><?= htmlspecialchars($p['suppliers']) ?></td>
+                                    <td>
+                                        <a class="btn btn-warning btn-sm" href="index.php?action=product_edit&id=<?= $p['id'] ?>">Editar</a>
+                                        <a class="btn btn-danger btn-sm" href="index.php?action=product_delete&id=<?= $p['id'] ?>">Deletar</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                     <button class="btn btn-danger btn-sm" type="submit">Excluir selecionados</button>
@@ -80,4 +75,4 @@
             document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = source.checked);
         }
     </script>
-<?php include('../parts/footer.php'); ?>
+<?php include('views/parts/footer.php'); ?>
