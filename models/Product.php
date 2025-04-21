@@ -9,7 +9,7 @@ class Product {
     }
 
     public function getAll($name = '', $supplierId = null) {
-        $sql = "SELECT p.id, p.name, GROUP_CONCAT(f.name SEPARATOR ', ') AS suppliers
+        $sql = "SELECT p.id, p.name, p.price, GROUP_CONCAT(f.name SEPARATOR ', ') AS suppliers
                 FROM products p
                 LEFT JOIN product_supplier pf ON p.id = pf.products_id
                 LEFT JOIN suppliers f ON pf.supplier_id = f.id
@@ -57,10 +57,10 @@ class Product {
     public function update($id, $name, $price, $description, $suppliers) {
         $this->db->beginTransaction();
         $stmt = $this->db->prepare("UPDATE products SET name = :name, price = :price, description = :description WHERE id = :id");
-        $stmt->binValue(':name', $name);
-        $stmt->binValue(':price', $price);
-        $stmt->binValue(':description', $description);
-        $stmt->binValue(':id', $id);
+        $stmt->bindValue(':name', $name);
+        $stmt->bindValue(':price', $price);
+        $stmt->bindValue(':description', $description);
+        $stmt->bindValue(':id', $id);
         $stmt->execute();
         $this->db->prepare("DELETE FROM product_supplier WHERE products_id = ?")->execute([$id]);
         $this->linkSuppliers($id, $suppliers);

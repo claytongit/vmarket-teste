@@ -27,26 +27,26 @@ class Supplier {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function create($name, $description, $cnpj, $cep, $andress, $number, $city, $state) {
-        $stmt = $this->db->prepare("INSERT INTO suppliers (name, description, cnpj, cep, andress, number, city, state) VALUES (:name, :description, :cnpj, :cep, :andress, :number, :city, :state)");
+    public function create($name, $description, $cnpj, $cep, $address, $number, $city, $state) {
+        $stmt = $this->db->prepare("INSERT INTO suppliers (name, description, cnpj, cep, address, number, city, state) VALUES (:name, :description, :cnpj, :cep, :address, :number, :city, :state)");
         $stmt->bindValue(':name', $name);
         $stmt->bindValue(':description', $description);
         $stmt->bindValue(':cnpj', $cnpj);
         $stmt->bindValue(':cep', $cep);
-        $stmt->bindValue(':andress', $andress);
+        $stmt->bindValue(':address', $address);
         $stmt->bindValue(':number', $number);
         $stmt->bindValue(':city', $city);
         $stmt->bindValue(':state', $state);
         return $stmt->execute();
     }
 
-    public function update($id, $name) {
-        $stmt = $this->db->prepare("UPDATE suppliers SET name = :name, description = :description, cnpj = :cnpj, cep = :cep, andress = :andress, number = :number, city = :city, state = :state WHERE id = ?");
+    public function update($id, $name, $description, $cnpj, $cep, $address, $number, $city, $state) {
+        $stmt = $this->db->prepare("UPDATE suppliers SET name = :name, description = :description, cnpj = :cnpj, cep = :cep, address = :address, number = :number, city = :city, state = :state WHERE id = :id");
         $stmt->bindValue(':name', $name);
         $stmt->bindValue('description', $description);
         $stmt->bindValue('cnpj', $cnpj);
         $stmt->bindValue('cep', $cep);
-        $stmt->bindValue('andress', $andress);
+        $stmt->bindValue('address', $address);
         $stmt->bindValue('number', $number);
         $stmt->bindValue('city', $city);
         $stmt->bindValue('state', $state);
