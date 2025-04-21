@@ -66,3 +66,24 @@
         </div>
     </div>
 <?php include('views/parts/footer.php'); ?>
+<script>
+    $(document).ready(function(){
+        $('#cnpj').mask('00.000.000/0000-00');
+        $('#cep').mask('00000-000',{
+            onComplete: function(cep) {
+                $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(data) {
+                    if (!("erro" in data)) {
+                        $("#address").val(data.logradouro);
+                        $("#city").val(data.localidade);
+                        $("#state").val(data.uf);
+                        $('#number').focus();
+                    } else {
+                        $("#address").val("");
+                        $("#city").val("");
+                        $("#state").val("");
+                    }
+                });
+            }
+        });
+    });
+</script>
