@@ -8,8 +8,10 @@ class Supplier {
         $this->db = Database::connect();
     }
 
-    public function getAll() {
-        $stmt = $this->db->query("SELECT * FROM suppliers ORDER BY name ASC");
+    public function getAll($name = '') {
+        $stmt = $this->db->prepare("SELECT * FROM suppliers WHERE name LIKE :name ORDER BY name ASC");
+        $stmt->bindValue(':name', "%$name%");
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
