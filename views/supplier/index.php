@@ -17,6 +17,21 @@
                 </div>
             </div>
             <div class="card-body">
+                <form method="GET" action="index.php">
+                    <input type="hidden" name="action" value="supplier_index">
+                    <div class="row">
+                        <div class="col">                                
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Nome do fornecedor">
+                                <label for="name">Nome do fornecedor</label>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-sm" type="submit">Buscar</button>
+                </form>
+
+                <hr>
+
                 <form method="POST" action="index.php?action=supplier_delete_multiple">
                     <table class="table">
                         <thead>

@@ -10,7 +10,9 @@ class SupplierController {
     }
 
     public function index() {
-        $suppliers = $this->model->getAll();
+        $name = $_GET['name'] ?? '';
+        
+        $suppliers = $this->model->getAll($name);
         require 'views/supplier/index.php';
     }
 
