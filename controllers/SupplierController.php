@@ -25,8 +25,17 @@ class SupplierController {
             $city = $_POST['city'] ?? '';
             $state = $_POST['state'] ?? '';
             
-            $this->model->create($name, $description, $cnpj, $cep, $address, $number, $city, $state);
-            header("Location: index.php?action=supplier_index");
+            try {
+                $this->model->create($name, $description, $cnpj, $cep, $address, $number, $city, $state);
+                header("Location: index.php?action=supplier_index");
+            } catch (PDOException $e) {
+                if ($e->errorInfo[1] == 1062) {
+                    header("Location: index.php?action=supplier_index&error=supplier_cnpj_exists");
+                } else {
+                    header("Location: index.php?action=supplier_index&error=db_error");
+                }
+                exit;
+            }
         } else {
             require 'views/supplier/create.php';
         }

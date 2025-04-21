@@ -64,15 +64,9 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <button class="btn btn-danger btn-sm" type="submit">Excluir selecionados</button>
+                    <button class="btn btn-danger btn-sm d-none" id="btn-delete-multiple" type="submit">Excluir selecionados</button>
                 </form>
             </div>
         </div>
     </div>
-    
-    <script>
-        function toggleAll(source) {
-            document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = source.checked);
-        }
-    </script>
 <?php include('views/parts/footer.php'); ?>
